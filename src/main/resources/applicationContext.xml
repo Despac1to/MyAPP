@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<context:component-scan base-package="netty.service.purchase.*" />
+
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<bean id="serviceRegistry" class="netty.zk.ServiceRegistry">
+		<constructor-arg name="registryAddress" value="${registry.address}" />
+	</bean>
+	
+	<bean id="myServer" class="netty.server.MyServer">
+		<constructor-arg name="registryAddress" value="${registry.address}" />
+		<constructor-arg name="serviceRegistry" ref="serviceRegistry" />
+	</bean>
+
+
+</beans>
