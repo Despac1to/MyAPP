@@ -22,6 +22,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import netty.annotation.MyService;
 import netty.endecode.MyDecoder;
 import netty.endecode.MyEncoder;
+import netty.handler.MyHandler;
 import netty.model.Request;
 import netty.model.Response;
 import netty.zk.ServiceRegistry;
@@ -67,9 +68,9 @@ public class MyServer implements ApplicationContextAware, InitializingBean {
 
 						@Override
 						protected void initChannel(SocketChannel sc) throws Exception {
-							sc.pipeline().addLast(new MyDecoder(Request.class))
-								.addLast(new MyEncoder(Response.class)); // 消息解码
-							
+							sc.pipeline().addLast(new MyDecoder(Request.class)) // 消息解析
+								.addLast(new MyEncoder(Response.class)) // 消息序列话
+								.addLast(new MyHandler(serviceMap)); // 消息处理
 						}
 					}).option(ChannelOption.SO_BACKLOG, 128) // TCP连接
 					.childOption(ChannelOption.SO_KEEPALIVE, true); // 保持连接

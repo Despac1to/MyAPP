@@ -8,10 +8,11 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 public class MyDecoder extends ByteToMessageDecoder{
 	
-	private Class<?> genericClass;
+	// 解析目标类
+	private Class<?> targetClass;
 
-    public MyDecoder(Class<?> genericClass) {
-        this.genericClass = genericClass;
+    public MyDecoder(Class<?> targetClass) {
+        this.targetClass = targetClass;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class MyDecoder extends ByteToMessageDecoder{
         byte[] data = new byte[dataLength];
         in.readBytes(data);
 
-        Object obj = SerializationUtil.deserialize(data, genericClass);
+        Object obj = SerializationUtil.deserialize(data, targetClass);
         out.add(obj);
     }
 	

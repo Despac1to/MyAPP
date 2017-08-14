@@ -37,6 +37,7 @@ public class SerializationUtil {
 		LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
 		try {
 			Schema<T> schema = getSchema(cls);
+			// 使用protobuf工具类进行解析
 			return ProtostuffIOUtil.toByteArray(obj, schema, buffer);
 		} catch (Exception e) {
 			throw new IllegalStateException(e.getMessage(), e);
@@ -50,6 +51,7 @@ public class SerializationUtil {
 		try {
 			T message = (T) objenesis.newInstance(cls);
 			Schema<T> schema = getSchema(cls);
+			// 使用protobuf工具类进行序列化
 			ProtostuffIOUtil.mergeFrom(data, message, schema);
 			return message;
 		} catch (Exception e) {

@@ -55,7 +55,5 @@ public class MyHandler extends SimpleChannelInboundHandler<Request> {
         logger.error("Error occur!", cause);
         ctx.close();
     }
-	
-	
 
 }
